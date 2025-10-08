@@ -46,7 +46,7 @@ const translations = {
         "Founded after gaining valuable experience at Multicls, we combine technical mastery with creative innovation to deliver solutions that don't just meet expectations — they shatter them.",
       stats: {
         experience: "4+ Years",
-        projects: "30+ Projects",
+        projects: "20+ Projects",
         clients: "10+ Clients",
         services: "4 Core Services",
       },
@@ -517,7 +517,7 @@ const portfolioItems = [
     description:
       "A modern, full-stack Hotel Management System built with Next.js, TailwindCSS, and PDF.js. Features room & booking management, invoice generation, guest profiles, and analytics dashboard.",
     hashtags: ["#WebApplication", "#HotelTech", "#NextJS", "#FullStack"],
-    liveUrl: "https://elfahsimounir.github.io/hotelApp/dashboard",
+    liveUrl: "https://github.com/elfahsimounir/Hotel-Management-System",
     features: [
       "Room & Booking Management",
       "Invoice & PDF Generation",
@@ -558,7 +558,7 @@ const portfolioItems = [
     description:
       "Comprehensive HR management system tailored for Moroccan businesses. Complete solution from employee onboarding to payroll management, built with local compliance in mind.",
     hashtags: ["#HRTech", "#Morocco", "#Enterprise", "#Payroll"],
-    liveUrl: "#",
+    liveUrl: "https://github.com/elfahsimounir/hr-application",
     features: [
       "Employee Management",
       "Payroll & Benefits",
@@ -621,7 +621,7 @@ const portfolioItems = [
     description:
       "Advanced e-commerce platform featuring AI assistant powered by DeepSeek for enhanced user experience. Complete beauty & cosmetics marketplace with intelligent product recommendations, automated customer support, and seamless shopping experience.",
     hashtags: ["#ECommerce", "#AI", "#DeepSeek", "#NextJS", "#FullStack"],
-    liveUrl: "#",
+    liveUrl: "https://github.com/elfahsimounir/fs-ecommerce",
     features: [
       "AI Shopping Assistant (DeepSeek)",
       "Intelligent Product Recommendations",
@@ -1221,7 +1221,7 @@ export default function RefokusStyleLanding() {
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
                     <Mail className="w-6 h-6" aria-hidden="true" />
-                    <span className="text-sm sm:text-base">contact@empoverse.com</span>
+                    <span className="text-sm sm:text-base">elfahssimounir7@gmail.com</span>
                   </div>
                   <div className="flex items-center space-x-4">
                     <Phone className="w-6 h-6" aria-hidden="true" />
