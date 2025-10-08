@@ -2,10 +2,13 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getPrisma } from '@/lib/prisma'
 
+// Ensure Node.js runtime for Prisma on platforms like Vercel
+export const runtime = 'nodejs'
+
 const ContactSchema = z.object({
-  name: z.string().min(2).max(200),
-  email: z.string().email().max(320),
-  project: z.string().min(10).max(5000),
+  name: z.string().trim().min(2, 'Name is too short').max(200),
+  email: z.string().trim().email('Invalid email').max(320),
+  project: z.string().trim().min(5, 'Please add a few details').max(5000),
 })
 
 export async function POST(req: Request) {
@@ -23,7 +26,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true })
   } catch (err: any) {
     if (err?.name === 'ZodError') {
-      return NextResponse.json({ ok: false, error: 'Invalid input' }, { status: 400 })
+      return NextResponse.json(
+        { ok: false, error: 'Invalid input', issues: err.flatten?.() ?? undefined },
+        { status: 400 },
+      )
     }
     console.error('Contact submit error', err)
     return NextResponse.json({ ok: false, error: 'Server error' }, { status: 500 })

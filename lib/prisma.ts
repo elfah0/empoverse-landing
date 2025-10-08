@@ -3,13 +3,14 @@ import { PrismaClient as PrismaClientInternal } from '@prisma/client'
 
 let prisma: PrismaClientInternal | undefined
 
-export async function getPrisma() {
+export async function getPrisma(): Promise<PrismaClientInternal> {
   if (prisma) return prisma
-  prisma = (global as any).__prisma ?? new PrismaClientInternal()
+  const instance = (global as any).__prisma ?? new PrismaClientInternal()
   if (process.env.NODE_ENV !== 'production') {
-    ;(global as any).__prisma = prisma
+    ;(global as any).__prisma = instance
   }
-  return prisma
+  prisma = instance
+  return instance
 }
 
 export type PrismaClient = PrismaClientInternal
