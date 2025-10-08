@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/hooks/use-toast"
 import {
   ArrowRight,
   Mail,
@@ -663,6 +664,9 @@ export default function RefokusStyleLanding() {
   const [isLoading, setIsLoading] = useState(true)
   const [showHero, setShowHero] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const { toast } = useToast()
+  const [formState, setFormState] = useState({ name: "", email: "", project: "" })
+  const [submitting, setSubmitting] = useState(false)
 
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -787,6 +791,15 @@ export default function RefokusStyleLanding() {
                     ES
                   </option>
                 </select>
+
+                {/* Contact Button */}
+                <Button
+                  asChild
+                  size="sm"
+                  className="bg-white/20 text-white hover:bg-white/30 border border-white/30"
+                >
+                  <a href="#contact">{t.nav.startProject}</a>
+                </Button>
               </div>
             </div>
           </motion.nav>
@@ -1243,23 +1256,57 @@ export default function RefokusStyleLanding() {
               >
                 <Card className="bg-white/10 backdrop-blur-lg border-white/20">
                   <CardContent className="p-6 sm:p-8">
-                    <form className="space-y-6">
+                    <form
+                      className="space-y-6"
+                      onSubmit={async (e) => {
+                        e.preventDefault()
+                        if (submitting) return
+                        setSubmitting(true)
+                        try {
+                          const res = await fetch("/api/contact", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(formState),
+                          })
+                          const data = await res.json()
+                          if (res.ok && data?.ok) {
+                            toast({ title: "Message sent", description: "Thanks! We'll get back to you soon." })
+                            setFormState({ name: "", email: "", project: "" })
+                          } else {
+                            toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" as any })
+                          }
+                        } catch (err) {
+                          toast({ title: "Network error", description: "Please try again.", variant: "destructive" as any })
+                        } finally {
+                          setSubmitting(false)
+                        }
+                      }}
+                    >
                       <Input
                         placeholder={t.contact.form.name}
                         className="bg-white/10 border-white/20 text-white placeholder:text-white/60 h-12"
+                        value={formState.name}
+                        onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))}
+                        required
                       />
                       <Input
                         type="email"
                         placeholder={t.contact.form.email}
                         className="bg-white/10 border-white/20 text-white placeholder:text-white/60 h-12"
+                        value={formState.email}
+                        onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))}
+                        required
                       />
                       <Textarea
                         placeholder={t.contact.form.project}
                         rows={6}
                         className="bg-white/10 border-white/20 text-white placeholder:text-white/60 h-32 resize-none"
+                        value={formState.project}
+                        onChange={(e) => setFormState((s) => ({ ...s, project: e.target.value }))}
+                        required
                       />
-                      <Button className="w-full" size="lg">
-                        {t.contact.form.send}
+                      <Button className="w-full" size="lg" disabled={submitting}>
+                        {submitting ? "Sending..." : t.contact.form.send}
                       </Button>
                     </form>
                   </CardContent>

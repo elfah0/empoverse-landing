@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -334,6 +335,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
+        <Toaster />
 
         {/* Google Analytics 4 - Consent Friendly */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
