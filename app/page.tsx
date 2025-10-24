@@ -155,6 +155,7 @@ const translations = {
       form: {
         name: "Your Name",
         email: "Email Address",
+        phone: "Phone Number",
         project: "Tell us about your project",
         send: "Send Message",
       },
@@ -272,7 +273,7 @@ const translations = {
     contact: {
       title: "لنعمل معًا",
       subtitle: "مستعد لتحويل رؤيتك؟",
-      form: { name: "اسمك", email: "البريد الإلكتروني", project: "تفاصيل مشروعك", send: "إرسال" },
+      form: { name: "اسمك", email: "البريد الإلكتروني", project: "تفاصيل مشروعك", phone: "رقم الهاتف", send: "إرسال" },
     },
   },
 
@@ -387,7 +388,7 @@ const translations = {
     contact: {
       title: "Travaillons ensemble",
       subtitle: "Prêt à transformer votre vision ?",
-      form: { name: "Votre nom", email: "Adresse email", project: "Décrivez votre projet", send: "Envoyer" },
+      form: { name: "Votre nom", email: "Adresse email", phone: "Numéro de téléphone", project: "Décrivez votre projet", send: "Envoyer" },
     },
   },
 
@@ -502,7 +503,7 @@ const translations = {
     contact: {
       title: "Trabajemos juntos",
       subtitle: "¿Listo para transformar tu visión?",
-      form: { name: "Tu nombre", email: "Correo electrónico", project: "Cuéntanos tu proyecto", send: "Enviar" },
+      form: { name: "Tu nombre", email: "Correo electrónico", project: "Cuéntanos tu proyecto", phone: "Número de teléfono", send: "Enviar" },
     },
   },
 } as const
@@ -665,7 +666,7 @@ export default function RefokusStyleLanding() {
   const [showHero, setShowHero] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const { toast } = useToast()
-  const [formState, setFormState] = useState({ name: "", email: "", project: "" })
+  const [formState, setFormState] = useState({ name: "", email: "", project: "", phone: "" })
   const [submitting, setSubmitting] = useState(false)
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -1271,7 +1272,7 @@ export default function RefokusStyleLanding() {
                           const data = await res.json()
                           if (res.ok && data?.ok) {
                             toast({ title: "Message sent", description: "Thanks! We'll get back to you soon." })
-                            setFormState({ name: "", email: "", project: "" })
+                            setFormState({ name: "", email: "", project: "", phone: "" })
                           } else {
                             toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" as any })
                           }
@@ -1287,6 +1288,14 @@ export default function RefokusStyleLanding() {
                         className="bg-white/10 border-white/20 text-white placeholder:text-white/60 h-12"
                         value={formState.name}
                         onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))}
+                        required
+                      />
+                       <Input
+                        type="phone"
+                        placeholder={t.contact.form.phone}
+                        className="bg-white/10 border-white/20 text-white placeholder:text-white/60 h-12"
+                        value={formState.phone}
+                        onChange={(e) => setFormState((s) => ({ ...s, phone: e.target.value }))}
                         required
                       />
                       <Input
