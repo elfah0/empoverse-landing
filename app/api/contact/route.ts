@@ -8,6 +8,7 @@ export const runtime = 'nodejs'
 const ContactSchema = z.object({
   name: z.string().trim().min(2, 'Name is too short').max(200),
   email: z.string().trim().email('Invalid email').max(320),
+  phone: z.string().trim().min(6, 'Phone number is too short').max(20),
   project: z.string().trim().min(5, 'Please add a few details').max(5000),
 })
 
@@ -20,6 +21,7 @@ export async function POST(req: Request) {
       data: {
         name: data.name,
         email: data.email,
+        phone: data.phone,
         project: data.project,
       },
     })
