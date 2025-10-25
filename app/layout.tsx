@@ -5,6 +5,7 @@ import "./globals.css"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import { Toaster } from "@/components/ui/toaster"
+import MetaPixel from "@/components/MetaPixel"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -317,6 +318,15 @@ export default function RootLayout({
         {/* Performance Hints */}
         <meta httpEquiv="x-dns-prefetch-control" content="on" />
 
+        {/* Facebook Pixel noscript fallback (SSR) */}
+        {process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID ? (
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID}&ev=PageView&noscript=1" alt="" />`,
+            }}
+          />
+        ) : null}
+
         {/* Brand Association Meta Tags */}
         <meta name="application-name" content="Empoverse" />
         <meta name="msapplication-tooltip" content="Empoverse - Digital Agency in Morocco" />
@@ -336,7 +346,7 @@ export default function RootLayout({
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
         <Toaster />
-
+        <MetaPixel />
         {/* Google Analytics 4 - Consent Friendly */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
         <script

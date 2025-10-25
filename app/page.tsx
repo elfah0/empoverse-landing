@@ -21,6 +21,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { event } from "@/lib/fpixel"
 
 const translations = {
   en: {
@@ -1271,6 +1272,7 @@ export default function RefokusStyleLanding() {
                           })
                           const data = await res.json()
                           if (res.ok && data?.ok) {
+                            event("Message sent");
                             toast({ title: "Message sent", description: "Thanks! We'll get back to you soon." })
                             setFormState({ name: "", email: "", project: "", phone: "" })
                           } else {
