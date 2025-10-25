@@ -346,7 +346,10 @@ export default function RootLayout({
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
         <Toaster />
-        <MetaPixel />
+        {/* MetaPixel uses usePathname/useSearchParams (client hooks) and must be wrapped in Suspense when rendered from a server component */}
+        <Suspense fallback={null}>
+          <MetaPixel />
+        </Suspense>
         {/* Google Analytics 4 - Consent Friendly */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
         <script
